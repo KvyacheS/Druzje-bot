@@ -24,10 +24,10 @@ def slu4ajnijFakt(update, context):
     update.message.reply_text('Сырник - токсичный хуй')
 
 
-tjano4ki = ["ТЯНОЧКУ БЫ", "ТЯНОЧКУ ХОЧУ", "ХОЧУ ТЯНОЧКУ", "ЩАС БЫ ТЯНОЧКУ", "ТЯНОЧКУ ХОЧЕТСЯ", "ХОЧЕТСЯ ТЯНОЧКУ",
-            "ТЯНУЧКУ БЫ", "ТЯНУЧКУ ХОЧУ", "ХОЧУ ТЯНУЧКУ", "ЩАС БЫ ТЯНУЧКУ", "ТЯНУЧКУ ХОЧЕТСЯ", "ХОЧЕТСЯ ТЯНУЧКУ",
-            "ТЯН БЫ", "ТЯН ХОЧУ", "ТЯН ТЯНОЧКУ", "ЩАС БЫ ТЯН", "ТЯН ХОЧЕТСЯ", "ХОЧЕТСЯ ТЯН",
-            "ТЯНКУ БЫ", "ТЯНКУ ХОЧУ", "ХОЧУ ТЯНКУ", "ЩАС БЫ ТЯНКУ", "ТЯНКУ ХОЧЕТСЯ", "ХОЧЕТСЯ ТЯНКУ"]
+tjano4ki = ["ТЯНОЧКУ БЫ", "ТЯНОЧКУ ХОЧУ", "ХОЧУ ТЯНОЧКУ", "ЩАС БЫ ТЯНОЧКУ", "ТЯНОЧКУ ХОЧЕТСЯ", "ХОЧЕТСЯ ТЯНОЧКУ", "ТЯНОЧКУ ХОЧУ",
+            "ТЯНУЧКУ БЫ", "ТЯНУЧКУ ХОЧУ", "ХОЧУ ТЯНУЧКУ", "ЩАС БЫ ТЯНУЧКУ", "ТЯНУЧКУ ХОЧЕТСЯ", "ХОЧЕТСЯ ТЯНУЧКУ", "ТЯНУЧКУ ХОЧУ",
+            "ТЯН БЫ", "ТЯН ХОЧУ", "ТЯН ТЯНОЧКУ", "ЩАС БЫ ТЯН", "ТЯН ХОЧЕТСЯ", "ХОЧЕТСЯ ТЯН",  "ХОЧУ ТЯН",
+            "ТЯНКУ БЫ", "ТЯНКУ ХОЧУ", "ХОЧУ ТЯНКУ", "ЩАС БЫ ТЯНКУ", "ТЯНКУ ХОЧЕТСЯ", "ХОЧЕТСЯ ТЯНКУ", "ХОЧУ ТЯНКУ"]
 
 
 def tjan(update, context):
@@ -50,6 +50,16 @@ def noyou(update, context):
 
 def unca(update, context):
     update.message.reply_text("не ной, блядь")
+
+
+def newfag(update, context):
+    if '@SMR_Konstantin_Sosnin' in update.message.new_chat_members.username:
+        update.message.reply_text('ньюфаг, блядь')
+
+
+def welcome(update, context):
+    if update.message.new_chat_members.username.startswith('@KvyacheS'):
+        update.message.reply_text('welcome')
 
 
 class TjanFilter(BaseFilter):
@@ -77,11 +87,13 @@ def main():
     tjan_filter = TjanFilter()
     no_you_filter = NoYouFilter()
 
-    dp.add_handler(CommandHandler("aboutGroup", aboutGroup))
+    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, welcome))
+    dp.add_handler(CommandHandler("aboutGroup", aboutGroup, filters=Filters.chat(chat_id=-1001114719696)))
     dp.add_handler(MessageHandler(tjan_filter, tjan))
     dp.add_handler(MessageHandler(Filters.user(username='@Caendaley'), unca))
     # DruzjDruzishka Caendaley
     dp.add_handler(MessageHandler(no_you_filter, noyou))
+
     # log all errors
     dp.add_error_handler(error)
 
