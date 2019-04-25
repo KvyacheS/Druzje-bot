@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 # update. Error handlers also receive the raised TelegramError object in error.
 
 def aboutGroup(update, context):
-    update.message.reply_photo(photo=open("C:/Users/Alexander's PC/Desktop/GitHub/Druzje-bot/THH_bot_py", 'rb'))
+    update.message.reply_photo(photo=open("C:/Users/Alexander's PC/Desktop/GitHub/Druzje-bot/THH_bot_py/vg_under.jpg", 'rb'))
 
 
 def slu4ajnijFakt(update, context):
@@ -53,8 +53,7 @@ def unca(update, context):
 
 
 def newfag(update, context):
-    if '@SMR_Konstantin_Sosnin' in update.message.new_chat_members.username:
-        update.message.reply_text('ньюфаг, блядь')
+    update.message.reply_text('ньюфаг, блядь')
 
 
 def welcome(update, context):
@@ -64,17 +63,19 @@ def welcome(update, context):
 
 class TjanFilter(BaseFilter):
     def filter(self, message):
-        mes = message.text
-        for t in tjano4ki:
-            if t in mes.upper():
-                return True
-        return False
+        if message.text:
+            mes = message.text
+            for t in tjano4ki:
+                if t in mes.upper():
+                    return True
+            return False
 
 
 class NoYouFilter(BaseFilter):
     def filter(self, message):
-        mes = message.text
-        return 'НЕТ ТЫ' in mes.upper()
+        if message.text:
+            mes = message.text
+            return 'НЕТ ТЫ' in mes.upper()
 
 
 def main():
@@ -87,7 +88,7 @@ def main():
     tjan_filter = TjanFilter()
     no_you_filter = NoYouFilter()
 
-    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, welcome))
+    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members & Filters.chat(chat_id=-1001114719696), newfag))
     dp.add_handler(CommandHandler("aboutGroup", aboutGroup, filters=Filters.chat(chat_id=-1001114719696)))
     dp.add_handler(MessageHandler(tjan_filter, tjan))
     dp.add_handler(MessageHandler(Filters.user(username='@Caendaley'), unca))
