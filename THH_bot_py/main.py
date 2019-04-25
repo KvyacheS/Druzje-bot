@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 # update. Error handlers also receive the raised TelegramError object in error.
 
 def aboutGroup(update, context):
-    update.message.reply_photo(photo=open("C:/Users/Alexander's PC/Desktop/THH_bot_py/vg_under.jpg", 'rb'))
+    update.message.reply_photo(photo=open("C:/Users/Alexander's PC/Desktop/GitHub/Druzje-bot/THH_bot_py", 'rb'))
 
 
 def slu4ajnijFakt(update, context):
