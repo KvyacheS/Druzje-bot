@@ -135,7 +135,7 @@ class NoYouFilter(BaseFilter):
 
 def main():
     print('Bot started')
-    updater = Updater("842084881:AAElZKTtH0ZBFRtOvhsjQlGFv6aXPWdeBnY", use_context=True)
+    updater = Updater("884268402:AAHekHDw4T3Badp3LKmBSnsNQ9BUDiwf56M",use_context=True)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
