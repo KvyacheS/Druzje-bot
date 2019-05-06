@@ -1,5 +1,6 @@
 import logging
 import datetime
+from random import randint
 
 from time import time
 
@@ -30,6 +31,10 @@ tjano4ki = ["ТЯНОЧКУ БЫ", "ТЯНОЧКУ ХОЧУ", "ХОЧУ ТЯНО
             "ТЯНКУ БЫ", "ТЯНКУ ХОЧУ", "ХОЧУ ТЯНКУ", "ЩАС БЫ ТЯНКУ", "ТЯНКУ ХОЧЕТСЯ", "ХОЧЕТСЯ ТЯНКУ", "ХОЧУ ТЯНКУ"]
 
 
+newfags = ['KvyacheS', 'solarechoes', 'eempee', 'huemrath', 'salv4tion', 'kartofelnyy_dzhem', 'KingPaimon', 'Podzhog_S',
+           'giphochka', 'laAZYYZ', 'CUCKOLDINHO', 'Fractal_Tree', 'alex_owl', 'TEHEBOU', 'Frank671']
+
+
 def tjan(update, context):
     update.message.reply_text('Отставить пиздастрадания, рядовой')
 
@@ -56,9 +61,59 @@ def newfag(update, context):
     update.message.reply_text('ньюфаг, блядь')
 
 
+def poloznjak(update, context):
+    update.message.reply_text('Дота - шахматы 21го века. Аниме для пидаразов. Пельмени надо жарить. '
+                              'Тян не нужны. Дристани - говно для дибилов.')
+
+
+def numbers_to_strings(argument):
+    switcher = {
+        0: "ПРИДУРОК ЛАГЕРНЫЙ",
+        1: "СДОХНИ НАХ",
+        2: "СЛЫШ ХУЕГОЛОВЫЙ",
+        3: 'ДРОЧЕР НЕДОДЕЛАННЫЙ',
+        4: 'КОЗЁЛ СМЕРДЯЩИЙ',
+        5: 'ХУЙ С БУГРА',
+        6: 'ПИЗДАДУЙ ХУЕВ',
+        7: 'УДРУЧАЮЩИЙ ЗАСРАНЕЦ',
+        8: 'ШКОЛЬНИЦА-НЕГОДНИЦА',
+        9: 'СТАРШЕКЛАССНИЦА-БЕЗОБРАЗНИЦА',
+        10: 'ПИЗДЁНЫШЬ-ДОЛБАЁБЫШЬ',
+        11: 'ПИЗДА НЕСТРОЕВАЯ',
+        12: 'ПИЗДОДУЙ ХУЕВ',
+        13: 'ПРОБЛЯДЬ',
+        14: 'СУЧАРА ГНИЛОСНАЯ',
+        15: 'МАЛЕНЬКИЙ ОБОСРЫШЬ',
+        16: 'ХУЕГОЛОВЫЙ',
+        17: 'ПИЗДА С УШАМИ',
+        18: 'ЧУДОВИЩЕ МАЛЕНЬКОЕ',
+        19: 'ЦЕЛКА СМЕРДЯЩАЯ',
+        20: 'ДРОЧИЛА ГНИЛОСТНЫЙ',
+        21: 'СУКА ЁБАНАЯ',
+        22: 'БОТАНИК ХУЕВ',
+        23: 'УТЫРОК ЭДАКИЙ',
+        24: 'ПИЗДОЧЁС',
+        25: 'ОНАНИСТ ЁБАНЫЙ',
+        26: 'МАЛЕНЬКИЙ ОБОСРЫШ',
+        27: 'ОПИЗДОЛ',
+
+    }
+    return switcher.get(argument, "nothing")
+
+
+def otbros(update, context):
+    rand = randint(0, 27)
+    if update.message.reply_to_message:
+        update.message.reply_to_message.reply_text('ТЫ ' + numbers_to_strings(rand))
+    else:
+        update.message.reply_text('плейстейшн мне купи, ' + numbers_to_strings(rand))
+
+
 def welcome(update, context):
-    if update.message.new_chat_members.username.startswith('@KvyacheS'):
-        update.message.reply_text('welcome')
+    last_new_user = update.message.new_chat_members[-1]
+    for oldi in newfags:
+        if last_new_user['username'] == oldi:
+            update.message.reply_text('ньюфаг, блядь')
 
 
 class TjanFilter(BaseFilter):
@@ -88,12 +143,15 @@ def main():
     tjan_filter = TjanFilter()
     no_you_filter = NoYouFilter()
 
-    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members & Filters.chat(chat_id=-1001114719696), newfag))
+    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, welcome))
+    # & Filters.chat(chat_id=-1001114719696), welcome))
     dp.add_handler(CommandHandler("aboutGroup", aboutGroup, filters=Filters.chat(chat_id=-1001114719696)))
     dp.add_handler(MessageHandler(tjan_filter, tjan))
     dp.add_handler(MessageHandler(Filters.user(username='@Caendaley'), unca))
     # DruzjDruzishka Caendaley
     dp.add_handler(MessageHandler(no_you_filter, noyou))
+    dp.add_handler(CommandHandler('poloznjak', poloznjak))
+    dp.add_handler(CommandHandler('otbros', otbros))
 
     # log all errors
     dp.add_error_handler(error)
